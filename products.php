@@ -65,8 +65,8 @@ if (isset($_GET['sub_category_id']) && is_numeric($_GET['sub_category_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products in <?php echo htmlspecialchars($category['name']); ?></title>
-    <link href="https:
-    <link rel="stylesheet" href="https:
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -613,7 +613,18 @@ if (isset($_GET['sub_category_id']) && is_numeric($_GET['sub_category_id'])) {
                             <span class="product-badge">
                                 <i class="bi bi-star-fill"></i> New
                             </span>
-                            <div class="product-image"></div>
+                            <div class="product-image">
+                                <?php
+                                    $stmt = $pdo->prepare("SELECT path FROM images WHERE product_id = ? LIMIT 1");
+                                    $stmt->execute([$prod['id']]);
+                                    $img = $stmt->fetch();
+                                    if ($img && !empty($img['path'])):
+                                ?>
+                                    <img src="<?php echo htmlspecialchars($img['path']); ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                                <?php else: ?>
+                                    <i class="bi bi-box-seam"></i>
+                                <?php endif; ?>
+                            </div>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><?php echo htmlspecialchars($prod['name']); ?></h5>
                                 <div class="price-container">

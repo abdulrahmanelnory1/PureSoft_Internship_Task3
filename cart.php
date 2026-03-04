@@ -66,7 +66,7 @@ if ($action === 'update' && isset($_GET['id'], $_GET['qty'])) {
 
 if ($action === 'checkout') {
     if (!isset($_SESSION['user_id'])) {
-        header('Location: Auth/login.php?redirect=checkout.php');
+        header('Location: Auth/login.php?redirect=../checkout.php');
         exit;
     }
 
@@ -98,26 +98,8 @@ if (!empty($cart)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
-    
-    if ($action === 'checkout') {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: Auth/login.php?redirect=checkout.php');
-            exit;
-        }
-
-        $cart = getCart();
-
-        if (empty($cart)) {
-            header('Location: cart.php');
-            exit;
-        }
-
-        
-        header('Location: checkout.php');
-        exit;
-    }
-    <link href="https:
-    <link rel="stylesheet" href="https:
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -396,6 +378,6 @@ if (!empty($cart)) {
     </div>
 </footer>
 
-<script src="https:
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

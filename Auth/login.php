@@ -9,31 +9,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "<script>alert('Invalid email format.');</script>";
             exit();
         }
 
-        
         $stmt = $pdo->prepare("SELECT id, name, email, password_hash FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
-        
         if ($user) {
             if (password_verify($password, $user['password_hash'])) {
                 
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
+                $_SESSION['user_id']    = $user['id'];
+                $_SESSION['user_name']  = $user['name'];
                 $_SESSION['user_email'] = $user['email'];
 
-                
                 $redirect = '';
                 if (!empty($_POST['redirect'])) {
-                    
                     $redirect = $_POST['redirect'];
-                    if (strpos($redirect, 'http:
+                    // ✅ FIXED: was truncated — now properly blocks external/absolute URLs
+                    if (strpos($redirect, 'http://') === 0 || strpos($redirect, 'https://') === 0 || strpos($redirect, '//') === 0) {
                         $redirect = '';
                     }
                 }
@@ -44,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: ../index.php");
                 }
                 exit();
+
             } else {
                 echo "<script>alert('Incorrect password.');</script>";
             }
@@ -62,8 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Form</title>
-    <link href="https:
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -162,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Login</h2>
 
         <?php $redirect = htmlspecialchars($_GET['redirect'] ?? ''); ?>
-        <form action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "post">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
             <?php if ($redirect): ?>
                 <input type="hidden" name="redirect" value="<?php echo $redirect; ?>">
             <?php endif; ?>
@@ -178,5 +176,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         <p class="text-center mt-3">Don't have an account? <a href="register.php">Register here</a></p>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

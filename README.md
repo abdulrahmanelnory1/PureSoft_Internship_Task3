@@ -4,20 +4,33 @@ Brief, self-contained e-commerce demo written in plain PHP and MySQL.
 
 **Characteristics**
 - Simple PHP pages (no framework).
-- MySQL database stored in `e-commerce_db.sql`.
-- File-based structure suitable for XAMPP / local Apache + MySQL.
-- Minimal styling and example product/images folder for demonstration.
+- PDO/MySQL connection in `config/database.php`.
+- Session-based cart and minimal authentication under `Auth/`.
+- Database dump in `e-commerce_db.sql` for quick import.
+- File-based structure intended for XAMPP / local Apache + MySQL.
 
 **Project Structure**
-- `add_product.php` — form to add products (admin/demo).
-- `products.php` — product listing page.
+- `index.php` — homepage (categories overview).
+- `subcategories.php` — list subcategories for a category.
+- `products.php` — product listing (category/subcategory filtered).
 - `show.php` — single product detail view.
-- `cart.php` — shopping cart page.
-- `checkout.php` — checkout flow placeholder.
+- `add_product.php` — admin/demo form to add products (with image upload).
+- `cart.php` — shopping cart (session-based).
+- `checkout.php` — checkout placeholder/flow.
 - `Auth/` — authentication pages (`login.php`, `register.php`, `logout.php`).
-- `config/database.php` — database connection configuration.
-- `images/` — example image assets.
-- `e-commerce_db.sql` — SQL dump for creating/importing the database.
+- `config/database.php` — database connection configuration (PDO).
+- `images/` — product image assets.
+- `e-commerce_db.sql` — SQL dump for creating/importing the database and schema.
+
+**Contributions — What I implemented**
+- Implemented product management: add products and image uploads via `add_product.php`.
+- Built product listing and detail views: `products.php` and `show.php`.
+- Implemented category → subcategory → product navigation (`index.php`, `subcategories.php`).
+- Implemented a session-based cart (`cart.php`) with add/remove functionality.
+- Added a simple checkout placeholder flow in `checkout.php`.
+- Added authentication pages under `Auth/` (`login.php`, `register.php`, `logout.php`).
+- Created database schema and export (`e-commerce_db.sql`) and configured DB connection in `config/database.php`.
+- Included sample images in `images/` and basic frontend templates for demonstration.
 
 **Setup (local, XAMPP)**
 1. Ensure XAMPP (Apache + MySQL) is installed and running.
@@ -28,45 +41,17 @@ Brief, self-contained e-commerce demo written in plain PHP and MySQL.
 mysql -u root -p < e-commerce_db.sql
 ```
 
-(If using XAMPP defaults, `root` often has no password — press Enter when prompted.)
-
-4. Open the site in your browser: `http://localhost/e-commerce/`.
+4. Update DB credentials in `config/database.php` if needed.
+5. Open the site in your browser: `http://localhost/e-commerce/`.
 
 **Usage Notes**
-- Add products with `add_product.php` and view them through `products.php`.
-- Use `cart.php` to add/remove items and `checkout.php` as the final step (demo).
-- Authentication pages live under the `Auth/` folder.
+- Add or edit products with `add_product.php` (admin/demo).
+- Browse categories from `index.php`, drill into subcategories and products.
+- Use `cart.php` to view items in the session cart and proceed to `checkout.php`.
+- Login/register through the `Auth/` pages to test protected flows.
 
 **Security & Improvements (suggested)**
-- Use prepared statements (PDO or mysqli prepared) to prevent SQL injection.
+- Use prepared statements for all DB queries to prevent SQL injection.
 - Validate and sanitize all user inputs and file uploads.
-- Add CSRF protection on forms and authentication hardening.
-- Move DB credentials out of webroot or use environment variables.
-
-**Where to start for development**
-- Review `config/database.php` to confirm DB credentials.
-- Import `e-commerce_db.sql` then open `products.php` to verify data.
-
-**Contact / License**
-This is a small demo project — adapt freely for learning purposes.
-# E-Commerce Sample
-
-This workspace contains a basic PHP e-commerce skeleton with:
-
-- `config/database.php` - PDO connection to MySQL.
-- `index.php` - homepage listing categories from `categories` table (links to subcategories)
-- `subcategories.php` - new page showing a category's sub‑categories and routing to products
-- `products.php` - product listing filtered by category.
-- `cart.php` - simple session-based shopping cart.
-- Authentication under `Auth/` (login/register/logout).
-
-Populate some categories, sub‑categories, and products before using the homepage.
-Products must now be assigned to a sub_category (see schema above).
-
-## Usage
-
-1. Place the project in your web root (e.g. `htdocs/e-commerce`).
-2. Update `config/database.php` credentials.
-3. Create the tables and seed data.
-4. Visit `/e-commerce/index.php` in your browser.
-"# PureSoft_Internship_Task3" 
+- Add CSRF protection to all forms and strengthen authentication storage.
+- Store DB credentials outside the webroot or use environment variables."# PureSoft_Internship_Task3" 
