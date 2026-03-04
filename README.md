@@ -32,26 +32,8 @@ Brief, self-contained e-commerce demo written in plain PHP and MySQL.
 - Created database schema and export (`e-commerce_db.sql`) and configured DB connection in `config/database.php`.
 - Included sample images in `images/` and basic frontend templates for demonstration.
 
-**Setup (local, XAMPP)**
-1. Ensure XAMPP (Apache + MySQL) is installed and running.
-2. Place the project folder in XAMPP's `htdocs` (e.g., `C:\xampp\htdocs\e-commerce`).
-3. Import the database using phpMyAdmin or the command line:
-
-```bash
-mysql -u root -p < e-commerce_db.sql
-```
-
-4. Update DB credentials in `config/database.php` if needed.
-5. Open the site in your browser: `http://localhost/e-commerce/`.
-
 **Usage Notes**
 - Add or edit products with `add_product.php` (admin/demo).
 - Browse categories from `index.php`, drill into subcategories and products.
 - Use `cart.php` to view items in the session cart and proceed to `checkout.php`.
 - Login/register through the `Auth/` pages to test protected flows.
-
-**Security & Improvements (suggested)**
-- Use prepared statements for all DB queries to prevent SQL injection.
-- Validate and sanitize all user inputs and file uploads.
-- Add CSRF protection to all forms and strengthen authentication storage.
-- Store DB credentials outside the webroot or use environment variables."# PureSoft_Internship_Task3" 
